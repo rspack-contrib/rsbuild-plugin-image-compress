@@ -2,20 +2,17 @@ import { readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { expect, test } from '@playwright/test';
-import { createRsbuild } from '@rsbuild/core';
-import { pluginImageCompress } from '../../src';
+import { createRsbuild, loadConfig } from '@rsbuild/core';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 test('should compress image with use plugin-image-compress', async () => {
   const rsbuild = await createRsbuild({
     cwd: __dirname,
-    rsbuildConfig: {
-      plugins: [pluginImageCompress()],
-    },
+    rsbuildConfig: (await loadConfig({ cwd: __dirname })).content,
   });
 
-  await expect(rsbuild.build()).resolves.toBeDefined();
+  await rsbuild.build();
 
   const jpeg = readFileSync(
     join(__dirname, 'dist/static/image/image.jpeg'),
@@ -26,7 +23,7 @@ test('should compress image with use plugin-image-compress', async () => {
     'utf-8',
   );
   const svg = readFileSync(
-    join(__dirname, 'dist/static/image/mobile.svg'),
+    join(__dirname, 'dist/static/svg/mobile.svg'),
     'utf-8',
   );
   // const ico = names.find((item) => item.endsWith('.ico'))!;
@@ -37,9 +34,9 @@ test('should compress image with use plugin-image-compress', async () => {
   const originSvg = readFileSync(join(assetsDir, 'mobile.svg'), 'utf-8');
   // const originIco = readFileSync(join(assetsDir, 'image.ico'), 'utf-8');
 
-  expect(outputs[jpeg].length).toBeLessThan(originJpeg.length);
-  expect(outputs[png].length).toBeLessThan(originPng.length);
-  expect(outputs[svg].length).toBeLessThan(originSvg.length);
+  expect(jpeg.length).toBeLessThan(originJpeg.length);
+  expect(png.length).toBeLessThan(originPng.length);
+  expect(svg.length).toBeLessThan(originSvg.length);
   // TODO ico file size is not less than origin
   // expect(outputs[ico].length).toBeLessThan(originIco.length);
 });
