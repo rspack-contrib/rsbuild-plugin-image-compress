@@ -47,7 +47,7 @@
     "typescript": "^5.5.4"
   },
   "peerDependencies": {
-    "@rsbuild/core": "1.x"
+    "@rsbuild/core": "1.x || ^1.0.1-beta.0"
   },
   "peerDependenciesMeta": {
     "@rsbuild/core": {
