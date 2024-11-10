@@ -16,8 +16,8 @@
   "types": "./dist/index.d.ts",
   "files": ["dist"],
   "scripts": {
-   "build": "rslib build",
-		"dev": "rslib build --watch",
+    "build": "rslib build",
+    "dev": "rslib build --watch",
     "lint": "biome check .",
     "lint:write": "biome check . --write",
     "prepare": "simple-git-hooks && npm run build",
