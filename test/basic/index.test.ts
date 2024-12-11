@@ -26,17 +26,24 @@ test('should compress image with use plugin-image-compress', async () => {
     join(__dirname, 'dist/static/svg/mobile.svg'),
     'utf-8',
   );
+  const avif = readFileSync(
+    join(__dirname, 'dist/static/image/image.avif'),
+    'utf-8',
+  );
   // const ico = names.find((item) => item.endsWith('.ico'))!;
 
   const assetsDir = join(__dirname, '../assets');
   const originJpeg = readFileSync(join(assetsDir, 'image.jpeg'), 'utf-8');
   const originPng = readFileSync(join(assetsDir, 'image.png'), 'utf-8');
   const originSvg = readFileSync(join(assetsDir, 'mobile.svg'), 'utf-8');
+  const originAvif = readFileSync(join(assetsDir, 'image.avif'), 'utf-8');
   // const originIco = readFileSync(join(assetsDir, 'image.ico'), 'utf-8');
 
   expect(jpeg.length).toBeLessThan(originJpeg.length);
   expect(png.length).toBeLessThan(originPng.length);
   expect(svg.length).toBeLessThan(originSvg.length);
+  expect(avif.length).toBeLessThan(originAvif.length);
+  console.log(avif.length, originAvif.length);
   // TODO ico file size is not less than origin
   // expect(outputs[ico].length).toBeLessThan(originIco.length);
 });
