@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/plugin-image-compress",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "repository": "https://github.com/rspack-contrib/rsbuild-plugin-image-compress",
   "license": "MIT",
   "type": "module",
