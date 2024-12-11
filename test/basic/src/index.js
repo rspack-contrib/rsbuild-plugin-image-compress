@@ -1,9 +1,10 @@
+import imageAvif from '../../assets/image.avif?url';
 import imageIco from '../../assets/image.ico?url';
 import imageJpeg from '../../assets/image.jpeg?url';
 import imagePng from '../../assets/image.png?url';
 import imageSvg from '../../assets/mobile.svg?url';
 
-const images = [imageIco, imagePng, imageJpeg, imageSvg];
+const images = [imageIco, imagePng, imageJpeg, imageSvg, imageAvif];
 
 for (const image of images) {
   const el = new Image();

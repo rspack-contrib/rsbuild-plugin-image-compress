@@ -44,6 +44,15 @@ export const icoCodec: Codec<'ico'> = {
   },
 };
 
+export const avifCodec: Codec<'avif'> = {
+  handler(buf, options) {
+    return new Transformer(buf).avif(options);
+  },
+  defaultOptions: {
+    test: /\.avif$/,
+  },
+};
+
 export const svgCodec: Codec<'svg'> = {
   async handler(buf, options) {
     const result = svgo.optimize(buf.toString(), options);
@@ -61,6 +70,7 @@ const codecs: Record<Codecs, Codec<any>> = {
   pngLossless: pngLosslessCodec,
   ico: icoCodec,
   svg: svgCodec,
+  avif: avifCodec,
 };
 
 export default codecs;

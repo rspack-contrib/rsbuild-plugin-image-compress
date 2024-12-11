@@ -1,5 +1,6 @@
 import type { Buffer } from 'node:buffer';
 import type {
+  AvifConfig,
   JpegCompressOptions,
   PNGLosslessOptions,
   PngQuantOptions,
@@ -18,6 +19,7 @@ export interface CodecBaseOptions {
   pngLossless: PNGLosslessOptions;
   ico: Record<string, unknown>;
   svg: SvgoConfig;
+  avif: AvifConfig;
 }
 
 export interface BaseCompressOptions<T extends Codecs> {
