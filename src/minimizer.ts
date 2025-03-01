@@ -74,7 +74,10 @@ export class ImageMinimizerPlugin {
       try {
         if (!result) {
           const input = inputSource.source();
-          const buf = await codec.handler(Buffer.from(input), opts);
+          const buf = await codec.handler(
+            typeof input === 'string' ? Buffer.from(input) : input,
+            opts,
+          );
           result = { source: new RawSource(buf) };
           await cacheItem.storePromise(result);
         }
