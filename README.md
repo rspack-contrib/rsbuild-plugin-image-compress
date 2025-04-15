@@ -31,6 +31,8 @@ export default {
 };
 ```
 
+This plugin is compatible with both Rsbuild and Rspack. If you are using Rspack instead of Rsbuild, you can import the `ImageMinimizerPlugin` from the package, see [Rspack Usage](#rspack-usage).
+
 ## Default Compressors
 
 By default, the plugin will enable `jpeg`, `png`, `ico` image compressors, which are equivalent to the following two examples:
@@ -96,6 +98,52 @@ For example, the `png` compressor will take precedence over the `pngLossless` co
 
 ```js
 pluginImageCompress(["jpeg", "pngLossless", "ico", "png"]);
+```
+
+## Rspack Usage
+
+The plugin is also compatible with Rspack.
+
+If you are using Rspack instead of Rsbuild, you can import the `ImageMinimizerPlugin` from the package, use it in the [optimization.minimizer](https://rspack.dev/config/optimization#optimizationminimizer) array.
+
+```ts
+// rspack.config.mjs
+import { ImageMinimizerPlugin } from "@rsbuild/plugin-image-compress";
+import { defineConfig } from "@rspack/cli";
+
+export default defineConfig({
+  mode: process.env.NODE_ENV === "production" ? "production" : "development",
+  optimization: {
+    minimizer: [
+      // Use `...` to preserve the default JS and CSS minimizers of Rspack
+      '...',
+      // Add the image minimizer plugins
+      new ImageMinimizerPlugin({
+        use: "jpeg",
+        test: /\.(?:jpg|jpeg)$/,
+      }),
+      new ImageMinimizerPlugin({
+        use: "png",
+        test: /\.png$/,
+        maxQuality: 50,
+      }),
+      new ImageMinimizerPlugin({
+        use: "avif",
+        test: /\.avif$/,
+        quality: 80,
+      }),
+      new ImageMinimizerPlugin({
+        use: "svg",
+        test: /\.svg$/,
+        floatPrecision: 2,
+      }),
+      new ImageMinimizerPlugin({
+        use: "ico",
+        test: /\.(?:ico|icon)$/,
+      }),
+    ],
+  },
+});
 ```
 
 ## License

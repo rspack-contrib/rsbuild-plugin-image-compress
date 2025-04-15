@@ -35,6 +35,8 @@ const normalizeOptions = (options: Options[]) => {
 
 export const PLUGIN_IMAGE_COMPRESS_NAME = 'rsbuild:image-compress';
 
+export { ImageMinimizerPlugin };
+
 /** Options enable by default: {@link DEFAULT_OPTIONS} */
 export const pluginImageCompress: IPluginImageCompress = (
   ...args
