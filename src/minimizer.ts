@@ -67,6 +67,7 @@ export class ImageMinimizerPlugin {
       }
       const { source: inputSource } = asset;
 
+      // @ts-expect-error Hash type mismatch
       const eTag = cache.getLazyHashedEtag(inputSource);
       const cacheItem = cache.getItemCache(name, eTag);
       let result = await cacheItem.getPromise<MinimizedResult | undefined>();
