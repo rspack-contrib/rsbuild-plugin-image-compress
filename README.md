@@ -55,6 +55,7 @@ The plugin supports the following compressors:
 - `ico`: For ICO images.
 - `svg`: For SVG images.
 - `avif`: For AVIF images.
+- `webp`: For WEBP images.
 
 Only SVG are compressed by `svgo`, other compressors are compressed by `@napi-rs/image`.
 
@@ -75,6 +76,8 @@ pluginImageCompress([
   { use: "png", minQuality: 50 },
   // Options for @napi-rs/image `avif` method
   { use: "avif", quality: 80 },
+  // Options for @napi-rs/image `webp` method
+  { use: "webp", quality: 80 },
   // Options for svgo
   { use: 'svg', floatPrecision: 2 }
   // No options yet
@@ -130,6 +133,11 @@ export default defineConfig({
       new ImageMinimizerPlugin({
         use: "avif",
         test: /\.avif$/,
+        quality: 80,
+      }),
+      new ImageMinimizerPlugin({
+        use: "webp",
+        test: /\.webp$/,
         quality: 80,
       }),
       new ImageMinimizerPlugin({
