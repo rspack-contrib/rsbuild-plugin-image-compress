@@ -11,6 +11,7 @@ export type OneOrMany<T> = T | T[];
 
 export interface WebpTransformOptions {
   quality?: number;
+  signal?: AbortSignal;
 }
 
 export interface CodecBaseOptions {
@@ -20,6 +21,7 @@ export interface CodecBaseOptions {
   ico: Record<string, unknown>;
   svg: SvgoConfig;
   avif: AvifConfig;
+  webp: WebpTransformOptions;
 }
 
 export interface BaseCompressOptions<T extends Codecs> {
