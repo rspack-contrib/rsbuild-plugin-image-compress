@@ -53,6 +53,15 @@ export const avifCodec: Codec<'avif'> = {
   },
 };
 
+export const webpCodec: Codec<'webp'> = {
+  async handler(buf, options) {
+    return new Transformer(buf).webp(options.quality, options.signal);
+  },
+  defaultOptions: {
+    test: /\.webp$/,
+  },
+};
+
 export const svgCodec: Codec<'svg'> = {
   async handler(buf, options) {
     const result = svgo.optimize(buf.toString(), options);
@@ -71,6 +80,7 @@ const codecs: Record<Codecs, Codec<any>> = {
   ico: icoCodec,
   svg: svgCodec,
   avif: avifCodec,
+  webp: webpCodec,
 };
 
 export default codecs;
