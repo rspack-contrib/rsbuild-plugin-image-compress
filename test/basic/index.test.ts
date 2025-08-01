@@ -53,7 +53,6 @@ test('should compress image with use plugin-image-compress', async () => {
   expect(avif.length).toBeLessThan(originAvif.length);
   expect(webp.length).toBeLessThan(originWebp.length);
 
-  console.log(avif.length, originAvif.length);
   // TODO ico file size is not less than origin
   // expect(outputs[ico].length).toBeLessThan(originIco.length);
 });

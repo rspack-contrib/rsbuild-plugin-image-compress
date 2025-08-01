@@ -6,7 +6,7 @@ import {
   pngQuantize,
 } from '@napi-rs/image';
 import svgo from 'svgo';
-import type { Codec, Codecs } from '../types.js';
+import type { Codec, Codecs } from './types.js';
 
 export const jpegCodec: Codec<'jpeg'> = {
   handler(buf, options) {
