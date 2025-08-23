@@ -37,7 +37,7 @@
     "svgo": "^3.3.2"
   },
   "devDependencies": {
-    "@biomejs/biome": "^1.9.4",
+    "@biomejs/biome": "^2.2.2",
     "@playwright/test": "^1.54.1",
     "@rsbuild/core": "1.4.12",
     "@rslib/core": "^0.11.0",
