@@ -32,7 +32,10 @@ export interface BaseCompressOptions<T extends Codecs> {
 }
 
 export type FinalOptionCollection = {
-  [K in Codecs]: BaseCompressOptions<K> & CodecBaseOptions[K];
+  [K in Codecs]: BaseCompressOptions<K> &
+    CodecBaseOptions[K] & {
+      conversion?: ConversionOptions<Codecs>;
+    };
 };
 
 export type FinalOptions = FinalOptionCollection[Codecs];
@@ -49,3 +52,15 @@ export type OptionCollection = {
 };
 
 export type Options = OptionCollection[Codecs];
+
+export interface ConversionOptions<T extends Codecs = Codecs> {
+  convertTo?: T;
+}
+
+export interface BaseCompressOptions<T extends Codecs> {
+  use: T;
+  test?: OneOrMany<RegExp>;
+  include?: OneOrMany<RegExp>;
+  exclude?: OneOrMany<RegExp>;
+  conversion?: ConversionOptions<Codecs>;
+}

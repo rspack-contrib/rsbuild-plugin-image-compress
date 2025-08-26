@@ -1,5 +1,6 @@
 import assert from 'node:assert';
 import type { RsbuildPlugin } from '@rsbuild/core';
+import { ImageConverterPlugin } from './converter.js';
 import { ImageMinimizerPlugin } from './minimizer.js';
 import type { Codecs, Options } from './types.js';
 import { withDefaultOptions } from './utils.js';
@@ -45,10 +46,15 @@ export const pluginImageCompress: IPluginImageCompress = (
 
   setup(api) {
     const opts = normalizeOptions(castOptions(args));
+    const hasConversion = opts.some((opt) => opt.conversion?.convertTo);
 
     api.modifyBundlerChain((chain, { isDev }) => {
       if (isDev) {
         return;
+      }
+
+      if (hasConversion) {
+        chain.plugin('image-converter').use(ImageConverterPlugin, [opts]);
       }
 
       chain.optimization.minimize(true);
@@ -59,5 +65,24 @@ export const pluginImageCompress: IPluginImageCompress = (
           .use(ImageMinimizerPlugin, [opt]);
       }
     });
+
+    if (hasConversion) {
+      api.modifyRspackConfig((_, { addRules }) => {
+        const convertedFormats = opts
+          .filter((opt) => opt.conversion?.convertTo)
+          .map((opt) => (opt.conversion ? opt.conversion?.convertTo : null));
+
+        const uniqueFormats = [...new Set(convertedFormats)];
+
+        for (const format of uniqueFormats) {
+          addRules([
+            {
+              test: new RegExp(`\\.${format}$`),
+              type: 'asset/resource',
+            },
+          ]);
+        }
+      });
+    }
   },
 });
