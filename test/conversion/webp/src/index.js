@@ -1,7 +1,7 @@
-import imageJpeg from '../../../assets/conversion/source-jpeg.jpeg?url';
-import imagePng from '../../../assets/conversion/source-png.png?url';
+import imageJpeg from '../../../assets/image.jpeg?url';
+import imagePng from '../../../assets/image.png?url';
 
-const images = [imageJpeg, imagePng];
+const images = [imagePng, imageJpeg];
 
 for (const image of images) {
   const el = new Image();

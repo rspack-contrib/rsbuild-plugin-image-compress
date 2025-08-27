@@ -1,16 +1,15 @@
 import { defineConfig } from '@rsbuild/core';
-import { pluginImageCompress } from '../../../src/index';
+import { pluginImageConvert } from '../../../src/index';
 
 export default defineConfig({
   plugins: [
-    pluginImageCompress({
-      use: 'jpeg',
-      test: /\.(jpg|jpeg)$/,
-      conversion: {
-        convertTo: 'webp',
+    pluginImageConvert([
+      {
+        use: 'png',
+        to: 'avif',
+        quality: 80,
       },
-      quality: 90,
-    }),
+    ]),
   ],
   output: {
     filename: {

@@ -1,6 +1,7 @@
-import imageJpeg from '../../../assets/image.jpeg?url';
+import imageJpeg from '../../../assets/other-image.jpeg?url';
+import imageWebp from '../../../assets/other-image.webp?url';
 
-const images = [imageJpeg];
+const images = [imageJpeg, imageWebp];
 
 for (const image of images) {
   const el = new Image();

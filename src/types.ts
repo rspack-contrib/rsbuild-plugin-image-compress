@@ -32,10 +32,7 @@ export interface BaseCompressOptions<T extends Codecs> {
 }
 
 export type FinalOptionCollection = {
-  [K in Codecs]: BaseCompressOptions<K> &
-    CodecBaseOptions[K] & {
-      conversion?: ConversionOptions<Codecs>;
-    };
+  [K in Codecs]: BaseCompressOptions<K> & CodecBaseOptions[K];
 };
 
 export type FinalOptions = FinalOptionCollection[Codecs];
@@ -53,14 +50,49 @@ export type OptionCollection = {
 
 export type Options = OptionCollection[Codecs];
 
-export interface ConversionOptions<T extends Codecs = Codecs> {
-  convertTo?: T;
-}
-
-export interface BaseCompressOptions<T extends Codecs> {
-  use: T;
+// Convert options - aligned with minimizer pattern, using include/exclude instead of condition
+export type ConvertOptions<T extends Codecs = Codecs> = {
+  use: OneOrMany<T>;
   test?: OneOrMany<RegExp>;
   include?: OneOrMany<RegExp>;
   exclude?: OneOrMany<RegExp>;
-  conversion?: ConversionOptions<Codecs>;
+  to: Codecs;
+  skipIfLarger?: boolean;
+  maxFileSizeKB?: number;
+} & CodecBaseOptions[T];
+
+export interface OptimizeOptions {
+  convert?: ConvertOptions<Codecs>[];
+  compress?: Options[];
+}
+
+// Default conversion rules - convert common formats to modern formats
+export const DEFAULT_CONVERT_OPTIONS: ConvertOptions<Codecs>[] = [
+  {
+    use: 'png',
+    to: 'webp',
+    quality: 80,
+  },
+  {
+    use: 'jpeg',
+    to: 'webp',
+    quality: 80,
+  },
+  {
+    use: 'png',
+    to: 'avif',
+    quality: 60,
+  },
+  {
+    use: 'jpeg',
+    to: 'avif',
+    quality: 60,
+  },
+];
+
+// Helper types for matching
+export interface MatchObject {
+  test?: OneOrMany<RegExp>;
+  include?: OneOrMany<RegExp>;
+  exclude?: OneOrMany<RegExp>;
 }
