@@ -22,6 +22,8 @@
     "lint:write": "biome check . --write",
     "prepare": "simple-git-hooks && npm run build",
     "test": "playwright test",
+    "test:basic": "playwright test test/basic/",
+    "test:conversion": "playwright test test/conversion/",
     "bump": "npx bumpp"
   },
   "simple-git-hooks": {

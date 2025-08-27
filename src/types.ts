@@ -44,8 +44,58 @@ export interface Codec<T extends Codecs> {
 
 export type Codecs = keyof CodecBaseOptions;
 
+export type ConvertibleCodecs = Exclude<Codecs, 'svg' | 'ico'>;
+
 export type OptionCollection = {
   [K in Codecs]: K | FinalOptionCollection[K];
 };
 
 export type Options = OptionCollection[Codecs];
+
+export type ConvertOptions<T extends ConvertibleCodecs = ConvertibleCodecs> = {
+  use: OneOrMany<T>;
+  test?: OneOrMany<RegExp>;
+  include?: OneOrMany<RegExp>;
+  exclude?: OneOrMany<RegExp>;
+  to: ConvertibleCodecs;
+  skipIfLarger?: boolean;
+  maxFileSizeKB?: number;
+} & CodecBaseOptions[T];
+
+export interface OptimizeOptions {
+  convert?: ConvertOptions<ConvertibleCodecs>[];
+  compress?: Options[];
+}
+
+export const DEFAULT_CONVERT_OPTIONS: ConvertOptions<ConvertibleCodecs>[] = [
+  {
+    use: 'png',
+    to: 'webp',
+    quality: 80,
+    skipIfLarger: true,
+  },
+  {
+    use: 'jpeg',
+    to: 'webp',
+    quality: 80,
+    skipIfLarger: true,
+  },
+  {
+    use: 'png',
+    to: 'avif',
+    quality: 60,
+    skipIfLarger: true,
+  },
+  {
+    use: 'jpeg',
+    to: 'avif',
+    quality: 60,
+    skipIfLarger: true,
+  },
+];
+
+export interface MatchObject {
+  test?: OneOrMany<RegExp>;
+  include?: OneOrMany<RegExp>;
+  exclude?: OneOrMany<RegExp>;
+}
