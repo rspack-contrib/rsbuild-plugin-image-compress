@@ -72,21 +72,25 @@ export const DEFAULT_CONVERT_OPTIONS: ConvertOptions<ConvertibleCodecs>[] = [
     use: 'png',
     to: 'webp',
     quality: 80,
+    skipIfLarger: true,
   },
   {
     use: 'jpeg',
     to: 'webp',
     quality: 80,
+    skipIfLarger: true,
   },
   {
     use: 'png',
     to: 'avif',
     quality: 60,
+    skipIfLarger: true,
   },
   {
     use: 'jpeg',
     to: 'avif',
     quality: 60,
+    skipIfLarger: true,
   },
 ];
 
