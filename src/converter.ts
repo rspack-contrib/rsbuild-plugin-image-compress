@@ -2,7 +2,7 @@ import { Buffer } from 'node:buffer';
 import path from 'node:path';
 import type { Rspack } from '@rsbuild/core';
 import codecs from './codecs.js';
-import type { Codecs, ConvertOptions } from './types.js';
+import type { Codecs, ConvertOptions, ConvertibleCodecs } from './types.js';
 import { buildError, formatFileSize } from './utils.js';
 
 export const IMAGE_CONVERTER_PLUGIN_NAME = 'rsbuild:image-converter' as const;
@@ -35,7 +35,7 @@ export class ImageConverterPlugin {
     }
 
     const useCodecs = Array.isArray(option.use) ? option.use : [option.use];
-    if (!useCodecs.includes(originalFormat as Codecs)) {
+    if (!useCodecs.includes(originalFormat as ConvertibleCodecs)) {
       return false;
     }
 
@@ -98,7 +98,6 @@ export class ImageConverterPlugin {
 
       try {
         const targetCodec = codecs[matchingOption.to];
-        // Extract only the codec-specific options (exclude conversion-specific options)
         const { to, skipIfLarger, maxFileSizeKB, ...codecOptions } =
           matchingOption;
         const targetOptions = {

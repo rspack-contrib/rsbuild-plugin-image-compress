@@ -44,30 +44,30 @@ export interface Codec<T extends Codecs> {
 
 export type Codecs = keyof CodecBaseOptions;
 
+export type ConvertibleCodecs = Exclude<Codecs, 'svg' | 'ico'>;
+
 export type OptionCollection = {
   [K in Codecs]: K | FinalOptionCollection[K];
 };
 
 export type Options = OptionCollection[Codecs];
 
-// Convert options - aligned with minimizer pattern, using include/exclude instead of condition
-export type ConvertOptions<T extends Codecs = Codecs> = {
+export type ConvertOptions<T extends ConvertibleCodecs = ConvertibleCodecs> = {
   use: OneOrMany<T>;
   test?: OneOrMany<RegExp>;
   include?: OneOrMany<RegExp>;
   exclude?: OneOrMany<RegExp>;
-  to: Codecs;
+  to: ConvertibleCodecs;
   skipIfLarger?: boolean;
   maxFileSizeKB?: number;
 } & CodecBaseOptions[T];
 
 export interface OptimizeOptions {
-  convert?: ConvertOptions<Codecs>[];
+  convert?: ConvertOptions<ConvertibleCodecs>[];
   compress?: Options[];
 }
 
-// Default conversion rules - convert common formats to modern formats
-export const DEFAULT_CONVERT_OPTIONS: ConvertOptions<Codecs>[] = [
+export const DEFAULT_CONVERT_OPTIONS: ConvertOptions<ConvertibleCodecs>[] = [
   {
     use: 'png',
     to: 'webp',
@@ -90,7 +90,6 @@ export const DEFAULT_CONVERT_OPTIONS: ConvertOptions<Codecs>[] = [
   },
 ];
 
-// Helper types for matching
 export interface MatchObject {
   test?: OneOrMany<RegExp>;
   include?: OneOrMany<RegExp>;
