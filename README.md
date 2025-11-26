@@ -79,7 +79,7 @@ pluginImageCompress([
   // Options for @napi-rs/image `webp` method
   { use: "webp", quality: 80 },
   // Options for svgo
-  { use: 'svg', floatPrecision: 2 }
+  { use: "svg", floatPrecision: 2 },
   // No options yet
   { use: "ico" },
 ]);
@@ -119,7 +119,7 @@ export default defineConfig({
   optimization: {
     minimizer: [
       // Use `...` to preserve the default JS and CSS minimizers of Rspack
-      '...',
+      "...",
       // Add the image minimizer plugins
       new ImageMinimizerPlugin({
         use: "jpeg",
