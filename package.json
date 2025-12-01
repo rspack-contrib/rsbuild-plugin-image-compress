@@ -41,7 +41,7 @@
     "@playwright/test": "^1.55.1",
     "@rsbuild/core": "1.5.13",
     "@rslib/core": "^0.15.0",
-    "@types/node": "^22.18.8",
+    "@types/node": "^24.10.1",
     "nano-staged": "^0.8.0",
     "playwright": "^1.55.1",
     "simple-git-hooks": "^2.13.1",
