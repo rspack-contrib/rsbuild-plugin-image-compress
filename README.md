@@ -107,7 +107,7 @@ pluginImageCompress(["jpeg", "pngLossless", "ico", "png"]);
 
 The plugin is also compatible with Rspack.
 
-If you are using Rspack instead of Rsbuild, you can import the `ImageMinimizerPlugin` from the package, use it in the [optimization.minimizer](https://rspack.dev/config/optimization#optimizationminimizer) array.
+If you are using Rspack instead of Rsbuild, you can import the `ImageMinimizerPlugin` from the package, use it in the [optimization.minimizer](https://rspack.rs/config/optimization#optimizationminimizer) array.
 
 ```ts
 // rspack.config.mjs
