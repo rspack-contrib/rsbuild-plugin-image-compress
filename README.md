@@ -87,6 +87,76 @@ pluginImageCompress([
 
 For more information on compressors, please visit [@napi-rs/image](https://image.napi.rs/docs).
 
+## Image Conversion
+
+This package also contains a plugin for converting images between modern formats. This allows you to optimize images by converting them to more efficient formats, typically AVIF or WebP.
+
+### Conversion Configuration
+
+```js
+pluginImageCompress({
+  compress: [
+    { use: "jpeg" },
+    { use: "png" },
+  ],
+  convert: [
+    {
+      use: "png",           // Source format(s) to convert from
+      to: "webp",           // Target format to convert to
+      quality: 80,          // Quality setting for the target format
+      test: /\.png$/,       // Regex to match files (same behavior as compress)
+      include: /\.images/,  // Regex to include files (same behavior as compress)  
+      exclude: /\.exclude/, // Regex to exclude files (same behavior as compress)
+      skipIfLarger: true,   // Skip if converted file is larger than original
+      maxFileSizeKB: 100,   // Skip conversion if file size exceeds this limit (KB)
+    }
+  ]
+});
+```
+
+### Conversion-Specific Options
+
+The `convert` option accepts an array of conversion rules with the following properties:
+
+- `use`: Source format(s) to convert from (string or array, same behavior as compress)
+- `to`: Target format to convert to (supported: `jpeg`, `png`, `avif`, `webp`)
+- `quality`: Quality setting for the target format (0-100)
+- `skipIfLarger`: Skip conversion if converted file is larger than original
+- `maxFileSizeKB`: Skip conversion if original file size exceeds this limit (in KB)
+
+**Note**: The `test`, `include`, and `exclude` options work identically to the compression configuration for file matching.
+
+**Restriction**: SVG and ICO formats (in `use` field) cannot be converted, nor converted into (`to` field).
+
+### Default Conversion Rules
+
+By default, the plugin uses these conversion settings, and would skip if converted size is larger than original.
+
+```js
+convert: [
+  {
+    use: "png",
+    to: "webp",
+    quality: 80,
+  },
+  {
+    use: "jpeg", 
+    to: "webp", 
+    quality: 80,
+  },
+  {
+    use: "png",
+    to: "avif",
+    quality: 60,
+  },
+  {
+    use: "jpeg",
+    to: "avif",
+    quality: 60,
+  }
+]
+```
+
 ## Lossless PNG
 
 The default `png` compressor is lossy. If you want to replace it with a lossless compressor, you can use the following configuration.
